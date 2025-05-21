@@ -1,35 +1,110 @@
-Node.js + Express CRUD API with Auth
-🔒 JWT Authentication | 🛠 Modular Architecture | 🗃 MongoDB
+<h1>Node.js + Express CRUD API with Auth</h1>
 
-A clean, scalable backend API with:
-✅ User CRUD operations (Create, Read, Update, Delete)
-✅ JWT-based authentication (Register/Login)
-✅ Role-based authorization (User vs. Admin)
-✅ Validation (Joi)
-✅ UUID for unique identifiers
+<p>
+  <strong>🔒 JWT Authentication | 🛠 Modular Architecture | 🗃 MongoDB</strong>
+</p>
 
-SECRET VARIABLES(.ENV CONTENT)
+<p>A clean, scalable backend API featuring:</p>
+<ul>
+  <li>✅ User CRUD operations (Create, Read, Update, Delete)</li>
+  <li>✅ JWT-based authentication (Register/Login)</li>
+  <li>✅ Role-based authorization (<code>User</code> vs. <code>Admin</code>)</li>
+  <li>✅ Validation with <code>Joi</code></li>
+  <li>✅ UUID for unique identifiers</li>
+</ul>
+
+<h2>🔐 Secret Variables (.env)</h2>
+<pre><code>
 MONGO_URL=XXX
-PORT = 5000
+PORT=5000
 JWT_SECRET=XXX
 EXPIRES_IN=XXX
+</code></pre>
 
-📚 API Endpoints
-Base URL
-{{base_url}} (Set this in Postman variables, e.g., http://localhost:3000/api)
+<h2>📚 API Endpoints</h2>
+<p><strong>Base URL:</strong><br>
+<code>{{base_url}}</code> (Set this in Postman variables, e.g., <code>http://localhost:3000/api</code>)</p>
 
-🔐 Authentication
-Method	Endpoint	    Description	            Auth Required
-POST	/auth/register	Register a new user	    ❌ No
-POST	/auth/login	    Login (returns JWT)	    ❌ No
+<h3>🔐 Authentication</h3>
+<table>
+  <thead>
+    <tr>
+      <th>Method</th>
+      <th>Endpoint</th>
+      <th>Description</th>
+      <th>Auth Required</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>POST</td>
+      <td>/auth/register</td>
+      <td>Register a new user</td>
+      <td>❌ No</td>
+    </tr>
+    <tr>
+      <td>POST</td>
+      <td>/auth/login</td>
+      <td>Login (returns JWT)</td>
+      <td>❌ No</td>
+    </tr>
+  </tbody>
+</table>
 
-👥 User Management
-Method	Endpoint	Description	        Auth Required	Role Required
-POST	/users/	    Create a new user	✅ Yes (JWT)	    admin
-GET	    /users/	    Get all users	    ✅ Yes	        admin
-GET	    /users/:id	Get a user by ID	❌ No	        ❌ No
-PUT	    /users/:id	Update a user	    ❌ No	        ❌ No
-DELETE	/users/:id	Delete a user	    ✅ Yes	        admin
+<h3>👥 User Management</h3>
+<table>
+  <thead>
+    <tr>
+      <th>Method</th>
+      <th>Endpoint</th>
+      <th>Description</th>
+      <th>Auth Required</th>
+      <th>Role Required</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>POST</td>
+      <td>/users/</td>
+      <td>Create a new user</td>
+      <td>✅ Yes (JWT)</td>
+      <td><code>admin</code></td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td>/users/</td>
+      <td>Get all users</td>
+      <td>✅ Yes</td>
+      <td><code>admin</code></td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td>/users/:id</td>
+      <td>Get a user by ID</td>
+      <td>❌ No</td>
+      <td>❌ No</td>
+    </tr>
+    <tr>
+      <td>PUT</td>
+      <td>/users/:id</td>
+      <td>Update a user</td>
+      <td>❌ No</td>
+      <td>❌ No</td>
+    </tr>
+    <tr>
+      <td>DELETE</td>
+      <td>/users/:id</td>
+      <td>Delete a user</td>
+      <td>✅ Yes</td>
+      <td><code>admin</code></td>
+    </tr>
+  </tbody>
+</table>
 
-POSTMAN collection attached to the project.
+<h2>📦 Postman</h2>
+<p>✅ <strong>Postman collection attached to the project.</strong></p>
 
+<hr />
+<p align="center">
+  <em>Made with ❤️ using Node.js, Express, MongoDB</em>
+</p>
