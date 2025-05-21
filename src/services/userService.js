@@ -20,3 +20,8 @@ export const updateUser = async(userID,userData) => {
 export const deleteUser = async(userID) => {
     return await User.findOneAndDelete({userID});
 }
+
+export const isEmailExist = async(email) => {
+    const user = await User.findOne({email});
+    return user?true:false;
+}

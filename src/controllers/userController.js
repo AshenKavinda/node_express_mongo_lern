@@ -1,7 +1,12 @@
 import * as userService from "../services/userService.js";
+import { createUserSchema , updateUserSchema } from "../middlewares/userSchema.js";
 
 export const createUser = async(req, res , next) => {
     try {
+        const {error} = createUserSchema.validate(req.body);
+        if (error) return res.status(400).json({error: error.details[0].message});
+        const isExist = await userService.isEmailExist(req.body.email);
+        if (isExist) return res.status(400).json({error: "Email alrady exist."});
         const user = await userService.createUser(req.body);
         res.status(201).json(user);
     } catch (error) {
@@ -30,6 +35,9 @@ export const getUser = async(req,res,next) => {
 
 export const updateUser = async(req,res,next) => {
     try {
+        const {error} = updateUserSchema.validate(req.body);
+        if(error) return res.status(400).json({error: error.details[0].message});
+
         const user = await userService.updateUser(req.params.id,req.body);
         if(!user) return res.status(404).json({error: 'User not found!'});
         res.json(user);
