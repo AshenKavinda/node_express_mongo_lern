@@ -1,11 +1,11 @@
 import * as userService from "../services/userService.js";
-import { createUserSchema , updateUserSchema } from "../middlewares/userSchema.js";
+import { privateCreateUserSchema , updateUserSchema } from "../middlewares/userSchema.js";
 
 export const createUser = async(req, res , next) => {
     try {
-        const {error} = createUserSchema.validate(req.body);
+        const {error} = privateCreateUserSchema.validate(req.body);
         if (error) return res.status(400).json({error: error.details[0].message});
-        const isExist = await userService.isEmailExist(req.body.email);
+        const isExist = await userService.findByEmail(req.body.email);
         if (isExist) return res.status(400).json({error: "Email alrady exist."});
         const user = await userService.createUser(req.body);
         res.status(201).json(user);

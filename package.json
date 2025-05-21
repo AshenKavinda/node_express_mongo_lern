@@ -19,9 +19,12 @@
   "homepage": "https://github.com/AshenKavinda/node_express_mongo_lern#readme",
   "description": "",
   "dependencies": {
+    "bcrypt": "^6.0.0",
+    "cookie-parser": "^1.4.7",
     "dotenv": "^16.5.0",
     "express": "^5.1.0",
     "joi": "^17.13.3",
+    "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.15.0",
     "uuid": "^11.1.0"
   },

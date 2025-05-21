@@ -1,7 +1,12 @@
 import User from "../models/user.js";
+import bcrypt from 'bcrypt';
 
 export const createUser = async(userData) => {
-    const user = new User(userData);
+
+    const {password,...rest} = userData;
+    const hashPassword = await bcrypt.hash(password,10);
+
+    const user = new User({...rest,password:hashPassword});
     return await user.save();
 }
 
@@ -21,7 +26,7 @@ export const deleteUser = async(userID) => {
     return await User.findOneAndDelete({userID});
 }
 
-export const isEmailExist = async(email) => {
+export const findByEmail = async(email) => {
     const user = await User.findOne({email});
-    return user?true:false;
+    return user;
 }

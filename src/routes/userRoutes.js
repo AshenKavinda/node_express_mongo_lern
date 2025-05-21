@@ -1,4 +1,5 @@
 import express from 'express';
+import { authenticate,authorize } from '../middlewares/authMiddleware.js';
 import {
     createUser,
     getUser,
@@ -9,10 +10,10 @@ import {
 
 const router = express.Router();
 
-router.post('/',createUser);
-router.get('/',getUsers);
+router.post('/',authenticate,authorize(['admin']),createUser);
+router.get('/',authenticate,authorize(['admin']),getUsers);
 router.get('/:id',getUser);
 router.put('/:id',updateUser);
-router.delete('/:id',deleteUser);
+router.delete('/:id',authenticate,authorize(['admin']),deleteUser);
 
 export default router;
