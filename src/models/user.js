@@ -28,7 +28,11 @@ const userSchema = new mongoose.Schema({
         type: String,
         enum: ['admin','user'],
         default: 'user'
-    }
+    },
+    refreshTokens: [{
+        token: String,
+        expiresAt: Date
+    }]
 },{timestamps:true});
 
 export default mongoose.model('User', userSchema);
