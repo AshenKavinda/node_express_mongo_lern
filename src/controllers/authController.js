@@ -7,11 +7,29 @@ export const register = async(req,res,next) => {
         const {error} = publicCreateUserSchema.validate(req.body);
         if(error) return res.status(400).json({error: error.details[0].message});
 
-        const isExist = await userService.findByEmail(req.body.email);
-        if(isExist) return res.status(400).json({error: 'The email is alredy exist'});
-
-        const newUser = await userService.createUser({...req.body,role:'user'});        
+        const reponse = await userService.createUser({...req.body,role:'user'}); 
+        if (typeof reponse === 'string') {
+            return res.status(400).json({error: reponse});
+        }
         res.json(newUser);
+    } catch (error) {
+        next(error);
+    }
+}
+
+export const verifyEmail = async(req,res,next) => {
+    try {
+        const {token} = req.query;
+
+        const user = await userService.verifyEmail(token);
+        if(!user) return res.status(400).json({ error: 'Invalid or expired token' });
+
+        user.isVerified = true;
+        user.emailToken = undefined;
+        user.emailTokenExpires = undefined;
+        await user.save();
+
+        res.json({ message: 'Email verified successfully' });
     } catch (error) {
         next(error);
     }
@@ -22,15 +40,19 @@ export const login = async(req,res,next) => {
         const {error} = loginSchema.validate(req.body);
         if(error) return res.status(400).json({error: error.details[0].message});
 
-        const verified = await authService.loginUser(req.body.email,req.body.password);
+        const reponse = await authService.loginUser(req.body.email,req.body.password);
 
-        res.cookie('refreshToken', verified.refreshToken, {
+        if (typeof reponse === 'string') {
+            return res.status(400).json({error: reponse});
+        }
+
+        res.cookie('refreshToken', reponse.refreshToken, {
             httpOnly: true,
-            secure: process.env.NODE_ENV === 'production',  // HTTPS-only
-            maxAge: 7 * 24 * 60 * 60 * 1000  // 7 days
+            secure: process.env.NODE_ENV === 'production',  
+            maxAge: 7 * 24 * 60 * 60 * 1000  
         });
 
-        res.json(verified);
+        res.json(reponse);
     } catch (error) {
         next(error);
     }
