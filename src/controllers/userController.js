@@ -48,8 +48,8 @@ export const updateUser = async(req,res,next) => {
 
 export const deleteUser = async(req,res,next) => {
     try {
-        const deletedUser = userService.deleteUser(req.params.id);
-        if (!deleteUser) return res.status(404).json({error: 'user not found!'});
+        const deletedUser = await userService.deleteUser(req.params.id);
+        if (!deletedUser) return res.status(404).json({error: 'user not found!'});
         res.json({message:"user deleted successfully"});
     } catch (error) {
         next(error);

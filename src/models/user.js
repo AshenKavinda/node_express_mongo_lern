@@ -28,7 +28,14 @@ const userSchema = new mongoose.Schema({
         type: String,
         enum: ['admin','user'],
         default: 'user'
-    }
+    },
+    refreshTokens: [{
+        token: String,
+        expiresAt: Date
+    }],
+    isVerified: {type: Boolean,default:false},
+    emailToken: {type:String},
+    emailTokenExpires: {type:Date}
 },{timestamps:true});
 
 export default mongoose.model('User', userSchema);

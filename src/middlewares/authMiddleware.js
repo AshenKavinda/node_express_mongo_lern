@@ -1,11 +1,11 @@
-import { verifyToken } from "../utils/jwtUtils.js";
+import { verifyAccessToken } from "../utils/jwtUtils.js";
 
 export const authenticate = (req , res , next) => {
     const token = req.header('Authorization')?.replace('Bearer ','');
     if(!token) return res.status(404).json({error: 'Access denied. No token provided.'});
 
     try {
-        const decoded = verifyToken(token);
+        const decoded = verifyAccessToken(token);
         req.user = decoded;
         next();
     } catch (error) {
