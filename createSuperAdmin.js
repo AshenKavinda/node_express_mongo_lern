@@ -5,12 +5,11 @@ await connectDB();
 
 const superAdmin = {
   name: "Super Admin",
-  email: "kavindahemarathna456@gmail.com",
-  password: "Test#123",
+  email: "superadmin@yourdomain.com",
+  password: "TempP@ssw0rd123!",
   age: 30,
   role: "admin"
 };
 
 const user = await createUser(superAdmin);
 console.log(user);
-

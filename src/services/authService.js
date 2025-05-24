@@ -1,8 +1,6 @@
 import bcrypt from 'bcrypt';
 import { generateTokens , verifyRefreshToken } from "../utils/jwtUtils.js";
 import User from "../models/user.js";
-import { v4 as uuidv4 } from 'uuid';
-import { sendVarificationEmail } from '../utils/emailSender.js';
 
 export const loginUser = async(email,password) => {
     const user = await User.findOne({email});
@@ -10,19 +8,6 @@ export const loginUser = async(email,password) => {
     
     const isMatch = await bcrypt.compare(password,user.password);
     if (!isMatch) throw new Error("Incorrect email or password.");
-    if (!user.isVerified) {
-        const token = uuidv4();
-        const emailTokenExpires = new Date(Date.now() + 24 * 60 * 60 * 1000);
-
-        user.emailToken = token;
-        user.emailTokenExpires = emailTokenExpires;
-
-        await user.save();
-
-        await sendVarificationEmail(user.email,token);
-
-        return "email not verifid.please check your email and verify";
-    }
 
     const { accessToken , refreshToken } = generateTokens(user.userID,user.role);
     
