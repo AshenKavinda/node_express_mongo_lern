@@ -2,7 +2,7 @@ import bcrypt from 'bcrypt';
 import { generateTokens , verifyRefreshToken } from "../utils/jwtUtils.js";
 import User from "../models/user.js";
 import { v4 as uuidv4 } from 'uuid';
-import { sendVarificationEmail } from '../utils/emailSender.js';
+import { sendVarificationEmail,sendFogotPasswordEmail } from '../utils/emailSender.js';
 
 export const loginUser = async(email,password) => {
     const user = await User.findOne({email});
@@ -35,7 +35,6 @@ export const loginUser = async(email,password) => {
 export const refreshAccessToken = async(refreshToken) => {
     const decoded = verifyRefreshToken(refreshToken);
     const user = await User.findOne({userID:decoded.userID});
-    console.log(refreshToken);
     if (!user?.refreshTokens?.some(t => t.token === refreshToken)) {
         throw new Error("Invalied refresh token");
     }
@@ -53,3 +52,14 @@ export const logoutUser = async(refreshToken) => {
     user.refreshTokens = [];
     await user.save();
 };
+
+export const sendFogotPasswordLink = async(email) => {
+    const token = uuidv4();
+    const user = await User.findOne({email});
+    user.emailToken = token;
+    user.emailTokenExpires = new Date(Date.now() + 1000*60*60*24);
+
+    await sendFogotPasswordEmail(email,token);
+
+    user.save();
+}

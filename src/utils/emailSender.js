@@ -20,3 +20,15 @@ export const sendVarificationEmail = async(email,token) => {
 
     return "sended";
 }
+
+export const sendFogotPasswordEmail = async(email,token) => {
+    const verificationLink = `http://yourdomain.com/fogot-password?token=${token}`;
+    await transpoter.sendMail({
+        from: '"app name" <no-reply@yourdomain.com>',
+        to:email,
+        subject: 'Password reset request',
+        html: `Click <a href="${verificationLink}">here</a> to verify your email.\n code: ${token}`
+    });
+
+    return "sended";
+}

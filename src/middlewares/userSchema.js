@@ -73,3 +73,12 @@ export const loginSchema = joi.object({
     email: joi.string().required().email().trim(),
     password: passwordComplexity
 });
+
+export const validateEmail = joi.object({
+    email: joi.string().required().email().trim()
+});
+
+export const resetPassword = joi.object({
+    password: passwordComplexity,
+    token: joi.string().guid({version:['uuidv4']}).required()
+});
