@@ -6,10 +6,10 @@ import { sendVarificationEmail,sendFogotPasswordEmail } from '../utils/emailSend
 
 export const loginUser = async(email,password) => {
     const user = await User.findOne({email});
-    if(!user) throw new Error("Incorrect email or password.");
+    if(!user) return "Incorrect email or password.";
     
     const isMatch = await bcrypt.compare(password,user.password);
-    if (!isMatch) throw new Error("Incorrect email or password.");
+    if (!isMatch) return "Incorrect email or password.";
     if (!user.isVerified) {
         const token = uuidv4();
         const emailTokenExpires = new Date(Date.now() + 24 * 60 * 60 * 1000);
