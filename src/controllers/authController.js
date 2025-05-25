@@ -8,11 +8,8 @@ export const register = async(req,res,next) => {
         const {error} = publicCreateUserSchema.validate(req.body);
         if(error) return res.status(400).json({error: error.details[0].message});
 
-        const reponse = await userService.createUser({...req.body,role:'user'}); 
-        if (typeof reponse === 'string') {
-            return res.status(400).json({error: reponse});
-        }
-        res.json(newUser);
+        await userService.createUser({...req.body,role:'user'}); 
+        res.json({massage: "Registration commplete,verify your email and log-in"});
     } catch (error) {
         next(error);
     }
@@ -42,10 +39,6 @@ export const login = async(req,res,next) => {
         if(error) return res.status(400).json({error: error.details[0].message});
 
         const reponse = await authService.loginUser(req.body.email,req.body.password);
-
-        if (typeof reponse === 'string') {
-            return res.status(400).json({error: reponse});
-        }
 
         res.cookie('refreshToken', reponse.refreshToken, {
             httpOnly: true,

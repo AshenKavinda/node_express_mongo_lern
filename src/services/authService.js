@@ -3,13 +3,14 @@ import { generateTokens , verifyRefreshToken } from "../utils/jwtUtils.js";
 import User from "../models/user.js";
 import { v4 as uuidv4 } from 'uuid';
 import { sendVarificationEmail,sendFogotPasswordEmail } from '../utils/emailSender.js';
+import { ApiError } from '../utils/ApiError.js';
 
 export const loginUser = async(email,password) => {
     const user = await User.findOne({email});
-    if(!user) return "Incorrect email or password.";
+    if(!user) throw new ApiError(400, "Incorrect email or password.");
     
     const isMatch = await bcrypt.compare(password,user.password);
-    if (!isMatch) return "Incorrect email or password.";
+    if (!isMatch) throw new ApiError(400, "Incorrect email or password.");
     if (!user.isVerified) {
         const token = uuidv4();
         const emailTokenExpires = new Date(Date.now() + 24 * 60 * 60 * 1000);
@@ -21,7 +22,7 @@ export const loginUser = async(email,password) => {
 
         await sendVarificationEmail(user.email,token);
 
-        return "email not verifid.please check your email and verify";
+        throw new ApiError(400,"email not verifid.please check your email and verify");
     }
 
     const { accessToken , refreshToken } = generateTokens(user.userID,user.role);
@@ -36,7 +37,7 @@ export const refreshAccessToken = async(refreshToken) => {
     const decoded = verifyRefreshToken(refreshToken);
     const user = await User.findOne({userID:decoded.userID});
     if (!user?.refreshTokens?.some(t => t.token === refreshToken)) {
-        throw new Error("Invalied refresh token");
+        throw new ApiError(400,"Invalied refresh token");
     }
 
     const {accessToken} = generateTokens(user.userID,user.role);
