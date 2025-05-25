@@ -23,9 +23,36 @@ export const createUser = async(userData) => {
     return await user.save();
 }
 
-export const getUsers = async() => {
-    return await User.find();
-}
+export const getUsers = async ({ 
+  page = 1, 
+  limit = 10, 
+  search = '',
+  sort = '-createdAt' 
+}) => {
+  const skip = (page - 1) * limit;
+
+  const query = {};
+  if (search) {
+    query.$or = [
+      { name: { $regex: search, $options: 'i' } },
+      { email: { $regex: search, $options: 'i' } }
+    ];
+  }
+
+  const [users, total] = await Promise.all([
+    User.find(query)
+    .select('-password -__v -_id -refreshTokens -createdAt')
+    .sort(sort)
+    .skip(skip)
+    .limit(limit),
+    User.countDocuments(query)
+  ]);
+
+  return {
+    data: users,
+    pagination: { total, page, limit, totalPages: Math.ceil(total / limit) }
+  };
+};
 
 export const getUserByID = async(id) => {
     return await User.findOne({userID:id});
