@@ -2,6 +2,7 @@ import User from "../models/user.js";
 import bcrypt from 'bcrypt';
 import { v4 as uuidv4 } from 'uuid';
 import { sendVarificationEmail } from "../utils/emailSender.js";
+import { ApiError } from "../utils/ApiError.js";
 
 export const createUser = async(userData) => {
 
@@ -9,10 +10,10 @@ export const createUser = async(userData) => {
     const hashPassword = await bcrypt.hash(password,10);
 
     const unverifiedUser = await User.findOne({email:userData.email,isVerified:false});
-    if (unverifiedUser) return "Email is not verifid plese login and verify email.";
+    if (unverifiedUser) throw new ApiError(400,"Email is not verifid plese login and verify email.");
 
     const existingUser = await User.findOne({email:userData.email});
-    if (existingUser) return "Email is alredy exist.Plese use another email";
+    if (existingUser) throw new ApiError(400,"Email is alredy exist.Plese use another email");
 
     const token = uuidv4();
     const emailTokenExpires = new Date(Date.now() + 24 * 60 * 60 * 1000);
