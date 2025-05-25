@@ -14,14 +14,27 @@ export const createUser = async(req, res , next) => {
     }
 }
 
-export const getUsers = async(req,res,next) => {
-    try {
-        const users = await userService.getUsers();
-        res.status(200).json(users);
-    } catch (error) {
-        next(error);
-    }
-}
+export const getUsers = async (req, res, next) => {
+  try {
+    const { 
+      page = 1, 
+      limit = 10, 
+      q: search = '',
+      sort = '-createdAt'
+    } = req.query;
+
+    const result = await userService.getUsers({ 
+      page: parseInt(page), 
+      limit: parseInt(limit), 
+      search,
+      sort 
+    });
+    
+    res.json(result);
+  } catch (err) {
+    next(err);
+  }
+};
 
 export const getUser = async(req,res,next) => {
     try {
