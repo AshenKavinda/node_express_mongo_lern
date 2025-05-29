@@ -2,7 +2,6 @@ import * as userService from '../services/userService.js';
 import { publicCreateUserSchema, loginSchema,validateEmail,resetPassword as validateResetPassword } from '../middlewares/userSchema.js';
 import * as authService from '../services/authService.js';
 import bcrypt from 'bcrypt';
-import { response } from 'express';
 
 export const register = async(req,res,next) => {
     try {
