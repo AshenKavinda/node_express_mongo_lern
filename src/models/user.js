@@ -17,8 +17,7 @@ const userSchema = new mongoose.Schema({
         unique:true
     },
     password: {
-        type:String,
-        required: true
+        type:String
     },
     age: {
         type:Number,
@@ -28,6 +27,10 @@ const userSchema = new mongoose.Schema({
         type: String,
         enum: ['admin','user'],
         default: 'user'
+    },
+    provider: {
+        type: String,
+        enum: ['google']
     },
     refreshTokens: [{
         token: String,

@@ -52,6 +52,21 @@ export const login = async(req,res,next) => {
     }
 }
 
+export const loginWithgoogle = async(req,res,next) => {
+    try {
+        const reponse = await authService.loginWithGoogle(req.user.email);
+
+        res.cookie('refreshToken', reponse.refreshToken, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',  
+            maxAge: 7 * 24 * 60 * 60 * 1000  
+        });
+        res.redirect(`http://localhost:3000?token=${reponse.accessToken}`);
+    } catch (error) {
+        next(error);
+    }
+}
+
 export const refreshAccessToken = async(req,res,next) => {
     try {
         const {refreshToken} = req.cookies;
