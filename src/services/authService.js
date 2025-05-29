@@ -33,6 +33,14 @@ export const loginUser = async(email,password) => {
     return {userID:user.userID,accessToken,refreshToken};
 };
 
+export const loginWithGoogle = async(email) => {
+    const user = await User.findOne({email});
+    const { refreshToken , accessToken } = generateTokens(user.userID,user.role);
+    user.refreshTokens.push({token:refreshToken,expiresAt: new Date(Date.now()+7*24*60*60*1000)});
+    await user.save(); 
+    return {userID:user.userID,accessToken,refreshToken};
+}
+
 export const refreshAccessToken = async(refreshToken) => {
     const decoded = verifyRefreshToken(refreshToken);
     const user = await User.findOne({userID:decoded.userID});
