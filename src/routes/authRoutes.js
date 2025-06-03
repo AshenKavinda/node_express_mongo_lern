@@ -272,12 +272,6 @@ router.get('/verify-email', verifyEmail);
  *                 message:
  *                   type: string
  *                   example: Verification link sent to your email
- *       400:
- *         description: Bad request
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/Error'
  */
 router.post('/forgot-password', sendFogotPasswordLink);
 
@@ -316,12 +310,6 @@ router.post('/forgot-password', sendFogotPasswordLink);
  *                 message:
  *                   type: string
  *                   example: Password reset successfully
- *       400:
- *         description: Bad request
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/Error'
  */
 router.post('/reset-password', resetPassword);
 
