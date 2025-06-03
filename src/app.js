@@ -3,6 +3,7 @@ import cookieParser from 'cookie-parser';
 import userRoute from "./routes/userRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
 import { errorHandler } from "./middlewares/errorHandler.js";
+import { setupSwagger } from "./config/swagger.js";
 
 import session from 'express-session';
 import passport from 'passport';
@@ -24,6 +25,8 @@ app.use(cookieParser());
 app.use('/api/users/',userRoute);
 app.use('/api/',authRoutes);
 app.use(errorHandler);
+
+setupSwagger(app);
 
 
 export default app;
