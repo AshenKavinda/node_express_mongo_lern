@@ -1,110 +1,115 @@
-<h1>Node.js + Express CRUD API with Auth</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Identity Microservice - Node.js + Express</title>
+</head>
+<body>
 
-<p>
-  <strong>🔒 JWT Authentication | 🛠 Modular Architecture | 🗃 MongoDB</strong>
-</p>
+  <h1>🚀 Identity Microservice</h1>
+  <p>
+    This is an <strong>authentication and user management microservice</strong> built with Node.js, Express.js, and MongoDB.  
+    It handles user registration, login, Google OAuth, email verification, password reset, and admin-level user management.  
+    Designed as part of my backend learning journey with microservices architecture.
+  </p>
 
-<p>A clean, scalable backend API featuring:</p>
-<ul>
-  <li>✅ User CRUD operations (Create, Read, Update, Delete)</li>
-  <li>✅ JWT-based authentication (Register/Login)</li>
-  <li>✅ Role-based authorization (<code>User</code> vs. <code>Admin</code>)</li>
-  <li>✅ Validation with <code>Joi</code></li>
-  <li>✅ UUID for unique identifiers</li>
-</ul>
+  <h2>🔐 Features</h2>
 
-<h2>🔐 Secret Variables (.env)</h2>
-<pre><code>
-MONGO_URL=XXX
-PORT=5000
-JWT_SECRET=XXX
-EXPIRES_IN=XXX
-</code></pre>
+  <h3>Auth Services</h3>
+  <ul>
+    <li>Public Registration</li>
+    <li>Login</li>
+    <li>Logout</li>
+    <li>Refresh Token</li>
+    <li>Email Verification (before first login)</li>
+    <li>Forgot Password</li>
+    <li>Sign-up / Sign-in with Google</li>
+  </ul>
 
-<h2>📚 API Endpoints</h2>
-<p><strong>Base URL:</strong><br>
-<code>{{base_url}}</code> (Set this in Postman variables, e.g., <code>http://localhost:3000/api</code>)</p>
+  <h3>User Services</h3>
+  <ul>
+    <li>System Registration (Admin Only)</li>
+    <li>Display All Users</li>
+    <li>Get User by ID</li>
+    <li>Update User by ID</li>
+    <li>Delete User by ID</li>
+  </ul>
 
-<h3>🔐 Authentication</h3>
-<table>
-  <thead>
-    <tr>
-      <th>Method</th>
-      <th>Endpoint</th>
-      <th>Description</th>
-      <th>Auth Required</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>POST</td>
-      <td>/auth/register</td>
-      <td>Register a new user</td>
-      <td>❌ No</td>
-    </tr>
-    <tr>
-      <td>POST</td>
-      <td>/auth/login</td>
-      <td>Login (returns JWT)</td>
-      <td>❌ No</td>
-    </tr>
-  </tbody>
-</table>
+  <h2>⚙️ Non-Functional Features</h2>
+  <ul>
+    <li>JWT Authentication</li>
+    <li>Role-Based Authorization</li>
+    <li>Server-Side Validation</li>
+    <li>Pagination with Filtering</li>
+    <li>Custom Error Handling</li>
+  </ul>
 
-<h3>👥 User Management</h3>
-<table>
-  <thead>
-    <tr>
-      <th>Method</th>
-      <th>Endpoint</th>
-      <th>Description</th>
-      <th>Auth Required</th>
-      <th>Role Required</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>POST</td>
-      <td>/users/</td>
-      <td>Create a new user</td>
-      <td>✅ Yes (JWT)</td>
-      <td><code>admin</code></td>
-    </tr>
-    <tr>
-      <td>GET</td>
-      <td>/users/</td>
-      <td>Get all users</td>
-      <td>✅ Yes</td>
-      <td><code>admin</code></td>
-    </tr>
-    <tr>
-      <td>GET</td>
-      <td>/users/:id</td>
-      <td>Get a user by ID</td>
-      <td>❌ No</td>
-      <td>❌ No</td>
-    </tr>
-    <tr>
-      <td>PUT</td>
-      <td>/users/:id</td>
-      <td>Update a user</td>
-      <td>❌ No</td>
-      <td>❌ No</td>
-    </tr>
-    <tr>
-      <td>DELETE</td>
-      <td>/users/:id</td>
-      <td>Delete a user</td>
-      <td>✅ Yes</td>
-      <td><code>admin</code></td>
-    </tr>
-  </tbody>
-</table>
+  <h2>🧪 Documentation</h2>
+  <ul>
+    <li><strong>Postman Collection:</strong> Available in the <code>doc/</code> directory</li>
+    <li><strong>Swagger Docs:</strong> Access via <code>/api-docs</code> on your running server</li>
+  </ul>
 
-<h2>📦 Postman</h2>
-<p>✅ <strong>Postman collection attached to the project.</strong></p>
+  <h2>🛠️ Tech Stack</h2>
+  <ul>
+    <li>Node.js</li>
+    <li>Express.js</li>
+    <li>MongoDB</li>
+  </ul>
 
-<hr />
-<p align="center">
-  <em>Made with ❤️ using Node.js, Express, MongoDB</em>
-</p>
+  <h2>🔧 .env Configuration</h2>
+  <pre><code>
+MONGO_URL=
+PORT=
+
+JWT_SECRET=
+REFRESH_TOKEN_SECRET=
+ACCESS_EXPIRES_IN=
+REFRESH_EXPIRES_IN=
+
+EMAIL_USER=
+EMAIL_PASSWORD=
+
+GOOGLE_CLIENT_ID=
+GOOGLE_CLIENT_SECRET=
+
+SESSION_SECRET=
+  </code></pre>
+
+  <h2>📦 Dependencies</h2>
+  <pre><code>
+"dependencies": {
+  "bcrypt": "^6.0.0",
+  "cookie-parser": "^1.4.7",
+  "dotenv": "^16.5.0",
+  "express": "^5.1.0",
+  "express-session": "^1.18.1",
+  "joi": "^17.13.3",
+  "jsonwebtoken": "^9.0.2",
+  "mongoose": "^8.15.0",
+  "nodemailer": "^7.0.3",
+  "passport": "^0.7.0",
+  "passport-google-oauth20": "^2.0.0",
+  "swagger-jsdoc": "^6.2.8",
+  "swagger-ui-express": "^5.0.1",
+  "uuid": "^11.1.0"
+},
+"devDependencies": {
+  "nodemon": "^3.1.10"
+}
+  </code></pre>
+
+  <h2>🛣️ Roadmap</h2>
+  <ul>
+    <li>✅ Build identity microservice</li>
+    <li>🔧 Write unit tests using Jest</li>
+    <li>🚧 Build product microservice with cloud storage (AWS S3)</li>
+    <li>📡 Learn gRPC / HTTP communication between microservices</li>
+    <li>📦 Implement containerization (Docker)</li>
+  </ul>
+
+  <h2>🙌 Contributions & Feedback</h2>
+  <p>Feel free to fork, raise issues, or suggest improvements. Feedback is always welcome!</p>
+
+</body>
+</html>

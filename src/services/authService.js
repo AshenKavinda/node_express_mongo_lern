@@ -22,7 +22,7 @@ export const loginUser = async(email,password) => {
 
         await sendVarificationEmail(user.email,token);
 
-        throw new ApiError(400,"email not verifid.please check your email and verify");
+        throw new ApiError(403,"email not verifid.please check your email and verify");
     }
 
     const { accessToken , refreshToken } = generateTokens(user.userID,user.role);
@@ -45,7 +45,7 @@ export const refreshAccessToken = async(refreshToken) => {
     const decoded = verifyRefreshToken(refreshToken);
     const user = await User.findOne({userID:decoded.userID});
     if (!user?.refreshTokens?.some(t => t.token === refreshToken)) {
-        throw new ApiError(400,"Invalied refresh token");
+        throw new ApiError(404,"Invalied refresh token");
     }
 
     const {accessToken} = generateTokens(user.userID,user.role);

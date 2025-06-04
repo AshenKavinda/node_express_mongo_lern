@@ -34,7 +34,7 @@
 			"response": []
 		},
 		{
-			"name": "createUser",
+			"name": "private register",
 			"request": {
 				"auth": {
 					"type": "bearer",
@@ -77,7 +77,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"email\": \"superadmin@yourdomain.com\",\r\n    \"password\": \"TempP@ssw0rd123!\"\r\n}",
+					"raw": "{\r\n    \"email\": \"kavindahemarathna456@gmail.com\",\r\n    \"password\": \"Ashen#1234\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -103,7 +103,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"email\": \"ashen@autlook.com\",\r\n    \"password\": \"Ashen#321\"\r\n}",
+					"raw": "{\r\n    \"email\": \"kavindahemarathna321@gmail.com\",\r\n    \"password\": \"Test#123\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -117,6 +117,99 @@
 					],
 					"path": [
 						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login with google",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/google",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"google"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "refresh access token",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{base_url}}/refresh-token",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"refresh-token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "reset-password",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"password\":\"Ashen#1234\",\r\n    \"token\":\"4bd9d301-3a72-4ea3-a7a8-3b4fb954f9ad\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/reset-password",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"reset-password"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "fogot-password",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\":\"kavindahemarathna456@gmail.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/fogot-password",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"fogot-password"
 					]
 				}
 			},
@@ -163,7 +256,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiJiNGJjMzdhNC0zYWY0LTQ5NjctYjVjZi00ODVkODlhYzQyMDIiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3NDc4NDU1NDAsImV4cCI6MTc0Nzg0OTE0MH0.W02nHE6eSyNbS4jlPuAooQub_K9e5qot5HUVGWiA5L8",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI1MDdlMDU1OS02NDczLTRmMWItYWY1ZC1mMGNiNDc2ZDUxNjMiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3NDgxNjEyNjEsImV4cCI6MTc0ODE2NDg2MX0.XeVtAoX9pE9BfpHrqF7UeMR-eaCK3SZY5elEGv2Vi24",
 							"type": "string"
 						}
 					]
@@ -290,6 +383,34 @@
 						{
 							"key": "id",
 							"value": "18bd6cef-7b1e-43b9-b650-30e643b0a881"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "verify-email",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"superadmin@yourdomain.com\",\r\n    \"password\": \"TempP@ssw0rd123!\"\r\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/verify-email/?token=bf7d14fe-ff44-46d5-8f34-7bc65091efed",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"verify-email",
+						""
+					],
+					"query": [
+						{
+							"key": "token",
+							"value": "bf7d14fe-ff44-46d5-8f34-7bc65091efed"
 						}
 					]
 				}
