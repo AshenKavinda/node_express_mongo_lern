@@ -95,17 +95,5 @@ SESSION_SECRET=
 }
   </code></pre>
 
-  <h2>🛣️ Roadmap</h2>
-  <ul>
-    <li>✅ Build identity microservice</li>
-    <li>🔧 Write unit tests using Jest</li>
-    <li>🚧 Build product microservice with cloud storage (AWS S3)</li>
-    <li>📡 Learn gRPC / HTTP communication between microservices</li>
-    <li>📦 Implement containerization (Docker)</li>
-  </ul>
-
-  <h2>🙌 Contributions & Feedback</h2>
-  <p>Feel free to fork, raise issues, or suggest improvements. Feedback is always welcome!</p>
-
 </body>
 </html>
